@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'users',
+    'transactions',
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'

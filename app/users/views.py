@@ -3,13 +3,13 @@ from users.serializers import UserSerializer
 from rest_framework import generics
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from users.utils import UsersFilterBackend
+from akvelon_payments.yasg import CustomFilterBackend
 
 class UserListCreateAPIView(generics.ListCreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
-    filter_backends = (UsersFilterBackend,)
+    filter_backends = (CustomFilterBackend,)
 
     def get(self, request, *args, **kwargs):
         users = CustomUser.objects.all()

@@ -1,6 +1,4 @@
 from django.contrib.auth.base_user import BaseUserManager
-from rest_framework.filters import BaseFilterBackend
-import coreapi
 
 class CustomUserManager(BaseUserManager):
 
@@ -26,12 +24,3 @@ class CustomUserManager(BaseUserManager):
             raise ValueError('Superuser must have is_superuser=True.')
 
         return self.create_user(email, password, **extra_fields)
-
-class UsersFilterBackend(BaseFilterBackend):
-    def get_schema_fields(self, view):
-        return [coreapi.Field(
-            name='order_by',
-            location='query',
-            required=False,
-            type='string'
-        )]
