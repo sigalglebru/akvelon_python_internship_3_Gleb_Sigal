@@ -119,4 +119,6 @@ migrations/
 *.xlsx
 *.xls
 
+#static and media
+static/
 media/
