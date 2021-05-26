@@ -5,7 +5,11 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile.prod
-    command: gunicorn akvelon_payments.wsgi:application --bind 0.0.0.0:8000
+    command: >
+      sh -c "python manage.py collectstatic --noinput &&
+             python manage.py makemigrations users &&
+             python manage.py migrate &&
+             gunicorn akvelon_payments.wsgi:application --bind 0.0.0.0:8000"
     volumes:
       - static_volume:/home/app/web/static
     expose:
