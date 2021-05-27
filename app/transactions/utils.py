@@ -4,8 +4,10 @@ import coreapi
 '''
 Helper class for sending string parameters through the Swagger UI interface
 '''
-#TODO: Make function for dynamic fields creation
-#TODO: Find some way to replace field's type and description
+
+
+# TODO: Make function for dynamic fields creation
+# TODO: Find some way to replace field's type and description
 
 
 class TransactionFilterBackend(BaseFilterBackend):

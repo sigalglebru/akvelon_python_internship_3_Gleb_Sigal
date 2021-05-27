@@ -7,10 +7,10 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from transactions.utils import TransactionFilterBackend
 
-
 '''
 Class for list and create transactions by anyone
 '''
+
 
 # TODO: Replace current access with the authorization system
 class TransactionListCreateAPIView(generics.ListCreateAPIView):
