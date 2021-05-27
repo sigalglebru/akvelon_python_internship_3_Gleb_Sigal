@@ -102,5 +102,4 @@ class TransactionSumView(APIView):
         if order:
             transactions = transactions.order_by(order)
 
-
         return Response(transactions)
