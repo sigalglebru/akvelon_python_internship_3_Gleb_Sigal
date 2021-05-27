@@ -8,6 +8,11 @@ from rest_framework.response import Response
 from transactions.utils import TransactionFilterBackend
 
 
+'''
+Class for list and create transactions by anyone
+'''
+
+# TODO: Replace current access with the authorization system
 class TransactionListCreateAPIView(generics.ListCreateAPIView):
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
@@ -21,8 +26,8 @@ class TransactionListCreateAPIView(generics.ListCreateAPIView):
         from_date = self.request.query_params.get('from_date', None)
         to_date = self.request.query_params.get('to_date', None)
 
-        specific_user = self.request.query_params.get('user_id', None)
-        specific_date = self.request.query_params.get('date', None)
+        specific_user = self.request.query_params.get('specific_user', None)
+        specific_date = self.request.query_params.get('specific_date', None)
 
         order = self.request.query_params.get('order_by', None)
 
@@ -56,6 +61,12 @@ class TransactionListCreateAPIView(generics.ListCreateAPIView):
         return Response(serializer.data)
 
 
+'''
+Class for retrieve, update and destroy specific transaction by anyone
+'''
+
+
+# TODO: Replace current access with the authorization system
 class TransactionDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
@@ -71,12 +82,13 @@ class TransactionSumView(APIView):
         to_date = request.query_params.get('to_date', None)
         transaction_type = self.request.query_params.get('transaction_type', None)
 
-        specific_user = self.request.query_params.get('user_id', None)
-        specific_date = self.request.query_params.get('date', None)
+        specific_user = self.request.query_params.get('specific_user', None)
+        specific_date = self.request.query_params.get('specific_date', None)
 
         order = self.request.query_params.get('order_by', None)
         transactions = Transaction.objects.filter().values('date').annotate(sum=Sum('amount'))
 
+        # Filter by transaction type from request
         if transaction_type:
             if transaction_type in ('out', 'in'):
                 if transaction_type == 'in':

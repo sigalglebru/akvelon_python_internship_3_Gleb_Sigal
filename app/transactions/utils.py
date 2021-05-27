@@ -1,6 +1,12 @@
 from rest_framework.filters import BaseFilterBackend
 import coreapi
 
+'''
+Helper class for sending string parameters through the Swagger UI interface
+'''
+#TODO: Make function for dynamic fields creation
+#TODO: Find some way to replace field's type and description
+
 
 class TransactionFilterBackend(BaseFilterBackend):
     def get_schema_fields(self, view):
@@ -11,11 +17,6 @@ class TransactionFilterBackend(BaseFilterBackend):
             type='string'
         ), coreapi.Field(
             name='order_by',
-            location='query',
-            required=False,
-            type='string'
-        ), coreapi.Field(
-            name='user_id',
             location='query',
             required=False,
             type='string'
@@ -32,7 +33,12 @@ class TransactionFilterBackend(BaseFilterBackend):
             required=False,
             type='string'
         ), coreapi.Field(
-            name='date',
+            name='specific_user',
+            location='query',
+            required=False,
+            type='string'
+        ), coreapi.Field(
+            name='specific_date',
             description='exact day',
             location='query',
             required=False,
