@@ -2,29 +2,39 @@ version: '3'
 
 services:
   web:
-    build: ./app
+    build:
+      context: ./app
+      dockerfile: Dockerfile.prod
     command: >
       sh -c "python manage.py collectstatic --noinput &&
              python manage.py makemigrations users &&
              python manage.py makemigrations transactions &&
              python manage.py migrate &&
-             python manage.py runserver 0.0.0.0:8000"
+             python manage.py test &&
+             gunicorn akvelon_payments.wsgi:application --bind 0.0.0.0:8000"
     volumes:
-      - ./app/:/usr/src/app/
-    ports:
-      - 8000:8000
+      - static_volume:/home/app/web/static
+    expose:
+      - 8000
     env_file:
-      - ./.env.dev
+      - ./.env.prod
     depends_on:
       - db
   db:
     image: postgres:12.0-alpine
     volumes:
-      - postgres_data_dev:/var/lib/postgresql/data/
-    environment:
-      - POSTGRES_USER=akvelon_payments_user
-      - POSTGRES_PASSWORD=akvelon_payments_password
-      - POSTGRES_DB=akvelon_payments_db_dev
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env.prod.db
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/home/app/web/static
+    ports:
+      - 1337:80
+    depends_on:
+      - web
 
 volumes:
-  postgres_data_dev:
+  postgres_data:
+  static_volume:
