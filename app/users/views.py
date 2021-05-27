@@ -5,6 +5,12 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from users.utils import UserFilterBackend
 
+'''
+Class for list and create users by anyone
+'''
+
+
+# TODO: Replace current access with the authorization system
 class UserListCreateAPIView(generics.ListCreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
@@ -22,6 +28,12 @@ class UserListCreateAPIView(generics.ListCreateAPIView):
         return Response(serializer.data)
 
 
+'''
+Class for retrieve, update and destroy specific user by anyone
+'''
+
+
+# TODO: Replace current access with the authorization system
 class UserDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
