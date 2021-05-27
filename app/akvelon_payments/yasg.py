@@ -10,6 +10,7 @@ schema_view = get_schema_view(
         description='For Akvelon by Sigal Gleb',
     ),
     public=True,
+    url='http://localhost:1337',
     permission_classes=(permissions.AllowAny,),
 )
 
